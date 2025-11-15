@@ -31,6 +31,8 @@ So, this model will
 
 The results can be saved as a .csv file, stored on the desktop.
 
+This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
+
 # IMPORTANT
 
 - To test, don’t forget to move the filer WoodCut-input.csv  to the desktop folder.
