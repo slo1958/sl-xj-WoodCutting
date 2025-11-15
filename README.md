@@ -3,7 +3,7 @@
 
 ## Description
 
-I created this (quick/dirty) project because I need to cut around 40 pieces of wood of different lengths out of standard pieces available at the nearby woodshop.
+I created this (quick/dirty) project because I need to cut around 40 pieces of wood of different lengths out of standard pieces available at the nearby shop.
 
 Did not want to waste to many wood and did not want to try to manually define a plan to cut the wood.
 
