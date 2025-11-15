@@ -690,7 +690,7 @@ Begin DesktopWindow Window1
       TabIndex        =   24
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Usefull leftover min.  length"
+      Text            =   "Useful leftover min.  length"
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   ""
@@ -852,10 +852,10 @@ End
 #tag WindowCode
 	#tag Method, Flags = &h0
 		Sub RunModel(partLength as integer, cutmargin as integer, usefullLeftover as integer, maxItems as integer, measureMargin as integer)
-		  var foldername as string = "cutplan-input"
-		  var filename as string = "Untitled.csv"  
 		  
-		  var sourcefile as FolderItem = SpecialFolder.Desktop.Child(foldername).child(filename)
+		  var inputfilename as string = "WoodCut-input.csv"  
+		  
+		  var sourcefile as FolderItem = SpecialFolder.Desktop.child(inputfilename)
 		  
 		  req = LoadRequirements(sourcefile)
 		  
@@ -880,8 +880,8 @@ End
 		  var res as clDataTable = wrl.ExportCutPlan("Cutplan")
 		  
 		  if ck_saveplan.Value then
-		    var filename as string = "CutPlan" + tf_inWoodLength.text + "cm-" + tf_in_MeasureMargin.text + "cm.csv"
-		    res.SaveWithIndex(new clTextWriter(SpecialFolder.Desktop.Child(filename), True))
+		    var outputfilename as string = "CutPlan" + tf_inWoodLength.text + "cm-" + tf_in_MeasureMargin.text + "cm.csv"
+		    res.SaveWithIndex(new clTextWriter(SpecialFolder.Desktop.Child(outputfilename), True))
 		    
 		  end if
 		  
