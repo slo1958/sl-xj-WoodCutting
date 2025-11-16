@@ -62,7 +62,7 @@ The results can be saved as a .csv file, stored on the desktop.
 	<img src="Screenshots/sc-run-02.png">
 </p>
 
-#### If the user checks 'Save plan', an output file is created
+#### If the user checks 'Save plan' before pressing Run an output file is created
 <p align="center">
 	<img src="Screenshots/sc-run-03.png">
 </p>
@@ -72,6 +72,11 @@ The results can be saved as a .csv file, stored on the desktop.
 	<img src="Screenshots/sc-output-01.png">
 </p>
 
+#### The content of the file is the cut plan
+
+<p align="center">
+	<img src="Screenshots/sc-output-02.png">
+</p>
 
 This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
 
@@ -84,9 +89,9 @@ This tool uses lib-data. The original version is available at https://github.com
 - The input file is expected to contain: 
 	- a column named ‘cell label’, that is renamed to ‘label’ when input file is loaded
 	- a column named ‘cell value’ that is converted to integer, named ‘Value’ when input file is loaded
+	- rows where the converted value is zero are filtered out 
 
-- The input file is loaded by method LoadRequirements
-
+- The input file is loaded by method LoadRequirements 
 
 
 #### Example input file
