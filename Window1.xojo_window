@@ -231,7 +231,7 @@ Begin DesktopWindow Window1
       TabIndex        =   11
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Nbr source item used"
+      Text            =   "Nbr source items used"
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   ""
