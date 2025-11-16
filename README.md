@@ -7,11 +7,15 @@ I created this (quick/dirty) project because I need to cut around 40 pieces of w
 
 Did not want to waste to many wood and did not want to try to manually define a plan to cut the wood.
 
-So, this model will 
+
+## Getting started
+This model will 
 
 - load a list of required items to cut
 	- a label (expecting a string column named ‘Label’)
 	- a length (expecting an integer column named ‘Value’)
+
+Note that the input file uses different column names, see ‘Important’ at the end of this document.
 
 - let the user define
 	- the length of standard items (source item)
@@ -39,20 +43,22 @@ So, this model will
 	<img src="Screenshots/sc-start-03.png">
 </p>
 
-
+## Results
  
-- the model produces
-	- a list of pieces (label and length) to cut out of each used standard wood
-	- the number of source items used (I.e. what you need to buy)
-	- the number of leftovers of which length is above the minimum length defined in input section (useful leftover)
-	- the total length of the useful leftovers 
-	- the number of required items not allocated either 
-		- because the model ran out of source items or
-		- because that source item is longer than the source items
+The model produces
+
+- a list of pieces (label and length) to cut out of each used standard wood
+- the number of source items used (I.e. what you need to buy)
+- the number of leftovers of which length is above the minimum length defined in input section (useful leftover)
+- the total length of the useful leftovers 
+- the number of required items not allocated either 
+	- because the model ran out of source items or
+	- because a required item is longer than the source items
 
 The results can be saved as a .csv file, stored on the desktop.
 
-#### Model run
+#### Model run 
+Note the measure margin is set to 3cm
 <p align="center">
 	<img src="Screenshots/sc-run-01.png">
 </p>
@@ -79,6 +85,13 @@ The results can be saved as a .csv file, stored on the desktop.
 </p>
 
 This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
+
+
+## Usage
+
+- Use the model to build a plan to cut the source items into the required items, note that ‘Nbr source items used’ gives the number of source items to buy
+- Use to model to test the solution with different tolerances for required measures by adjusting ‘Measure margin’ (I usually try with 0cm, 3cm and 5cm)
+- Use the model to test the number of source items and the total waste (total length leftover) by adjusting the ‘length of one source item’, based on availability (I usually test with 270cm, 300cm, 360cm since these are standard length here).
 
 # IMPORTANT
 
