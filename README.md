@@ -19,8 +19,8 @@ So, this model will
 	- the minimum length of a leftover to be considered for further cuts (useful leftover)
 	- the maximum number of source items to use
 
-<p align=“center”>
-	<img src = “Screenshots/sc_input-01.png”>
+<p align="center">
+	<img src="Screenshots/sc-input-01.png">
 </p>
  
 - the model produces
