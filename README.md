@@ -19,7 +19,10 @@ So, this model will
 	- the minimum length of a leftover to be considered for further cuts (useful leftover)
 	- the maximum number of source items to use
 
-
+<p align=“center”>
+	<img src = “Screenshots/sc_input-01.png”>
+</p>
+ 
 - the model produces
 	- a list of pieces (label and length) to cut out of each used standard wood
 	- the number of source items used (I.e. what you need to buy)
@@ -30,6 +33,8 @@ So, this model will
 		- because that source item is longer than the source items
 
 The results can be saved as a .csv file, stored on the desktop.
+
+
 
 This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
 
