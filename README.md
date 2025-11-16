@@ -103,8 +103,17 @@ This tool uses lib-data. The original version is available at https://github.com
 	- a column named ‘cell label’, that is renamed to ‘label’ when input file is loaded
 	- a column named ‘cell value’ that is converted to integer, named ‘Value’ when input file is loaded
 	- rows where the converted value is zero are filtered out 
+	- on my computer, the csv file is created with ‘;’ as field separator, you may need to adjust the separator if you produce your own csv file
 
-- The input file is loaded by method LoadRequirements 
+- The input file is loaded by method LoadRequirements, there you can
+	- adjust the field names to match your own field names as long as the loaded dataset contains the fields ‘Label’ and ‘Value’
+	- adjust the field separator
+
+
+
+<p align="center">
+	<img src="Screenshots/sc-source-01.png">
+</p>
 
 
 #### Example input file

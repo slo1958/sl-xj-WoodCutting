@@ -3,6 +3,7 @@ Protected Module WoodCuttingModel
 	#tag Method, Flags = &h0
 		Function LoadRequirements(sourceFile as FolderItem) As clDataTable
 		  
+		  // Set the field separator to ';'
 		  var cfg as new clTextFileConfig(";")
 		  
 		  // Load the datatable
@@ -22,7 +23,7 @@ Protected Module WoodCuttingModel
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function LoadRequirements1() As clDataTable
+		Function LoadRequirements_HardCoded() As clDataTable
 		  var tbl as new clDataTable("req")
 		  
 		  
