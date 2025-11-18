@@ -90,7 +90,7 @@ Class clWorld
 
 	#tag Method, Flags = &h0
 		Function ExportCutPlanAsTable(TableName as string) As clDataTable
-		   
+		  
 		  
 		  var tbl as new clDataTable(TableName)
 		  
@@ -111,7 +111,7 @@ Class clWorld
 		        
 		      next
 		      
-		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:"LeftOver", OutputLengthLabel:source.RemainingLength)
+		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:OutputLeftOverText, OutputLengthLabel:source.RemainingLength)
 		      tbl.AddRow(dr)
 		      
 		    else
@@ -477,6 +477,9 @@ Class clWorld
 	#tag EndProperty
 
 
+	#tag Constant, Name = OutputLeftOverText, Type = String, Dynamic = False, Default = \"LeftOver", Scope = Public
+	#tag EndConstant
+
 	#tag Constant, Name = OutputLengthLabel, Type = String, Dynamic = False, Default = \"Length", Scope = Public
 	#tag EndConstant
 
@@ -554,6 +557,14 @@ Class clWorld
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="WoodSourceLengtrh"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MeasureMargin"
 			Visible=false
 			Group="Behavior"
 			InitialValue=""

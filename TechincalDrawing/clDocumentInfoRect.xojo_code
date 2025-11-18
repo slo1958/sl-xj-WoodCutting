@@ -11,7 +11,7 @@ Class clDocumentInfoRect
 		  self.StyleComments = self.StyleTitle.clone(12)
 		  self.StyleMainTitle = self.StyleTitle.clone(clTextStyle.Style.Bold)
 		  
-		  
+		  self.marginBigFrame = 5
 		End Sub
 	#tag EndMethod
 
@@ -83,6 +83,10 @@ Class clDocumentInfoRect
 
 	#tag Property, Flags = &h0
 		DocTitle As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		marginBigFrame As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

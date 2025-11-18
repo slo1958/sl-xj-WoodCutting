@@ -12,7 +12,7 @@ Protected Module TechincalDrawing
 
 	#tag Method, Flags = &h0
 		Sub DrawPageFrame(g as graphics, inforect as clDocumentInfoRect, pagetitle as string, currentPage as integer, totalpages as integer = -1)
-		  const marginBigFrame as double =  5
+		   
 		  
 		  var pageWidth as double = g.width
 		  var pageHeight as double = g.Height
@@ -21,7 +21,7 @@ Protected Module TechincalDrawing
 		  
 		  // 
 		  // 
-		  g.DrawRectangle(marginBigFrame, marginBigFrame, pageWidth - 2*marginBigFrame, pageHeight - 2*marginBigFrame)
+		  g.DrawRectangle(inforect.marginBigFrame, inforect.marginBigFrame, pageWidth - 2*inforect.marginBigFrame, pageHeight - 2*inforect.marginBigFrame)
 		  
 		  if inforect = nil then return
 		  
@@ -29,12 +29,12 @@ Protected Module TechincalDrawing
 		  //
 		  // Box bottom right
 		  //
-		  var box_x as double = pageWidth - inforect.cartoucheWidth- marginBigFrame
-		  var box_y as double = pageHeight - inforect.cartoucheHeight- marginBigFrame 
+		  var box_x as double = pageWidth - inforect.cartoucheWidth- inforect.marginBigFrame
+		  var box_y as double = pageHeight - inforect.cartoucheHeight- inforect.marginBigFrame 
 		  var small_box_heigth as double = 30
 		  var vertical_offsettext as double = 20
 		  
-		  g.DrawRectangle(box_x, pageHeight - inforect.cartoucheHeight- marginBigFrame , inforect.cartoucheWidth, inforect.cartoucheHeight)
+		  g.DrawRectangle(box_x, pageHeight - inforect.cartoucheHeight- inforect.marginBigFrame , inforect.cartoucheWidth, inforect.cartoucheHeight)
 		  
 		  
 		  g.ApplyStyle(inforect.StyleMainTitle)
@@ -74,7 +74,7 @@ Protected Module TechincalDrawing
 		  if pagetitle <> "" then
 		    g.ApplyStyle(inforect.StyleComments)
 		    
-		    g.DrawText(pagetitle, box_x + 5, pageHeight - marginBigFrame - small_box_heigth + vertical_offsettext)
+		    g.DrawText(pagetitle, box_x + 5, pageHeight - inforect.marginBigFrame - small_box_heigth + vertical_offsettext)
 		    
 		  end if
 		  

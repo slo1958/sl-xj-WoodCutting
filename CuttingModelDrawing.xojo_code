@@ -3,119 +3,152 @@ Protected Module CuttingModelDrawing
 	#tag Method, Flags = &h0
 		Sub ExportDrawingsAsPDF(wrl as clWorld, inforect as clDocumentInfoRect)
 		  
+		  
+		  
+		  // The table is sorted per source item, with left over as last cut
+		  var res as clDataTable = wrl.ExportCutPlanAsTable("Cutplan")
+		  
+		  // We need a version sorted by part label for main page
+		  var resByItem as clDataTable = res.sort(array(wrl.OutputPartLabel))
+		  
+		  
 		  Var doc As New PDFDocument
 		  doc.Landscape = false
 		  
 		  Var g As Graphics = doc.Graphics
 		  
-		  Static sampleTextFirstPage As String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-		  Static sampleTextFirstPageSubsection As String = "Virtute equidem ceteros in mel. Id volutpat neglegentur eos. Eu eum facilisis voluptatum, no eam albucius verterem. Sit congue platonem adolescens ut. Offendit reprimique et has, eu mei homero imperdiet."+EndOfLine+EndOfLine+"Senserit mediocrem vis ex, et dicunt deleniti gubergren mei. Mel id clita mollis repudiare. Sed ad nostro delicatissimi, postea pertinax est an. Adhuc sensibus percipitur sed te, eirmod tritani debitis nec ea. Cu vis quis gubergren."+EndOfLine+EndOfLine+"No his munere interesset. At soluta accusam gloriatur eos, ferri commodo sed id, ei tollit legere nec. Eum et iudico graecis, cu zzril instructior per, usu at augue epicurei. Saepe scaevola takimata vix id. Errem dictas posidonium id vis, ne modo affert incorrupte eos."
-		  Static sampleTextSecondPage As String = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
 		  
+		  
+		  var summaryText As String  
 		  
 		  
 		  var titleStyle as new clTextStyle("Helvetica", 20, clTextStyle.Style.Bold)
 		  var headerStyle as new clTextStyle("Helvetica", 14, clTextStyle.Style.Bold)
 		  var bodyStyle as new clTextStyle("Helvetica", 12)
 		  
-		  DrawPageFrame(g, inforect,"", doc.CurrentPage,2)
+		  summaryText = "Basic length: " + wrl.WoodSourceLengtrh.ToString+"cm"
+		  summaryText = summaryText + EndOfLine + "Number of pieces to process: " + wrl.NbrSourceUsed.ToString + "   measure margin: " + wrl.MeasureMargin.ToString+"cm"
+		  summaryText = summaryText + EndOfLine + "Number of pieces afrer cut: " + wrl.NbrAllocated.ToString
+		  summaryText = summaryText + EndOfLine + "Number of leftove after cut: " + wrl.NbrLeftOver.ToString
+		  summaryText = summaryText + EndOfLine 
 		  
-		  g.ApplyStyle(titleStyle) 
-		  g.DrawText "Summary", 40, 50
+		  for each row as clDataRow in resByItem
+		    if row.Cell(wrl.OutputPartLabel) <> wrl.OutputLeftOverText then
+		      summaryText = summaryText + EndOfLine +" - " + row.cell(wrl.OutputPartLabel) + " : "  + row.cell(wrl.OutputLengthLabel)+"cm from item #" + row.cell(wrl.OutputSourceLabel)
+		      
+		    end if
+		  next
 		  
-		  g.ApplyStyle(headerStyle)
-		  g.DrawText "First Section", 40, 100
 		  
-		  g.ApplyStyle(bodyStyle)
-		  g.DrawText sampleTextFirstPage, 40, 120, g.Width-80
+		  var bar_top_margin as double =40
 		  
-		  Var firstSectionHeigth As Double = 120 + g.TextHeight(sampleTextFirstPage,g.Width-120)
-		  
-		  g.ApplyStyle(headerStyle)
-		  g.DrawText "First Subsection", 40, firstSectionHeigth+20
-		  
-		  g.ApplyStyle(bodyStyle)
-		  g.DrawText sampleTextFirstPageSubsection, 40, firstSectionHeigth+40, g.Width-80
-		  
-		  g.NextPage
-		  
-		  DrawPageFrame(g, inforect, "Last page ", doc.CurrentPage,2)
-		  
-		  g.ApplyStyle(titleStyle)
-		  g.DrawText "page title", 20, 20
-		  
-		  var bar_base_y as double = 40
 		  var bar_heigth as double = 30
 		  var bar_offset_x as double = 20
 		  var bar_jump_y as double = 150
 		  
-		  for each bar_label as string in array("Item #14","Item #15")
+		  var required_print_space as Double = bar_jump_y * wrl.NbrSourceUsed
+		  
+		  
+		  var numberOfBarsPerPage as integer = (g.Height - inforect.marginBigFrame - inforect.marginBigFrame - inforect.cartoucheHeight) / bar_jump_y
+		  var expectedNumberOfPages as integer =   1 +  Ceiling(wrl.NbrSourceUsed / numberOfBarsPerPage)
+		  
+		  DrawPageFrame(g, inforect,"", doc.CurrentPage,expectedNumberOfPages)
+		  
+		  g.ApplyStyle(titleStyle) 
+		  g.DrawText "Summary", 40, 50
+		  
+		  
+		  g.ApplyStyle(bodyStyle)
+		  g.DrawText summaryText, 40, 80, g.Width-80
+		  
+		  
+		  var currentSourceId as String
+		  var currentBarOnPage as integer = numberOfBarsPerPage * 2   // force new page on first call
+		  var pageCounter as integer = 1
+		  
+		  var full_length_measure as Double = wrl.WoodSourceLengtrh
+		  
+		  var last_cut_at_x as double = 0
+		  var extra_y as double = 0
+		  var bar_base_y as double = bar_top_margin
+		  
+		  var full_bar_width as double = g.Width-bar_offset_x - bar_offset_x
+		  
+		  for each row as clDataRow in res
+		    var rowSourceId as string = row.Cell(clWorld.OutputSourceLabel)
 		    
-		    // cut length and ful length Y
+		    
+		    
+		    if currentSourceId <> rowSourceId then
+		      bar_base_y = bar_base_y + bar_jump_y
+		      currentBarOnPage = currentBarOnPage + 1
+		      
+		      if currentBarOnPage > numberOfBarsPerPage then
+		        g.NextPage
+		        
+		        // Prepare new page
+		        DrawPageFrame(g, inforect, "Cut plan", doc.CurrentPage,expectedNumberOfPages)
+		        
+		        currentBarOnPage = 1
+		        bar_base_y = bar_top_margin
+		        
+		      end if
+		      
+		      
+		      //  full length Y
+		      var full_length_y as double =  bar_base_y+bar_heigth + 70
+		      
+		      var bar_label as string ="Item #" + row.Cell(wrl.OutputSourceLabel)
+		      
+		      
+		      
+		      g.DrawingColor = rgb(0,0,0)
+		      g.PenSize = 1
+		      g.DrawRectangle (bar_offset_x, bar_base_y, full_bar_width, bar_heigth)
+		      
+		      g.FontName = "Helvetica"
+		      g.FontSize = 12
+		      g.bold=True
+		      
+		      g.DrawText bar_label, bar_offset_x+5, bar_base_y + bar_heigth - 5
+		      
+		      g.DrawingColor = rgb(160,160,160)
+		      
+		      draw_vertical_dotted(g, bar_offset_x ,bar_base_y+1, full_length_y)
+		      draw_vertical_dotted(g, g.Width-bar_offset_x ,bar_base_y+1, full_length_y)
+		      
+		      // Full length bar
+		      draw_a_line(g, bar_offset_x, full_length_y, g.Width-bar_offset_x, full_length_y, wrl.WoodSourceLengtrh.ToString+"cm","", 0)
+		      
+		      last_cut_at_x  = 0
+		      extra_y = 0
+		       currentSourceId = rowSourceId
+		      
+		    end if
+		    
+		    
+		    // cut length  Y
 		    var cut_line_y as double =  bar_base_y+bar_heigth + 15
-		    var full_length_y as double =  bar_base_y+bar_heigth + 70
 		    
-		    var full_bar_width as double = g.Width-bar_offset_x - bar_offset_x
+		    var cut as Double = row.cell(wrl.OutputLengthLabel)
+		    var cut_label as string = row.cell(wrl.OutputPartLabel)
 		    
-		    g.DrawingColor = rgb(0,0,0)
-		    g.PenSize = 1
-		    g.DrawRectangle (bar_offset_x, bar_base_y, full_bar_width, bar_heigth)
+		    var scaled_width as Double = full_bar_width / full_length_measure * cut 
+		    var cut_at_x as double = last_cut_at_x + scaled_width
 		    
-		    g.FontName = "Helvetica"
-		    g.FontSize = 12
-		    g.bold=True
+		    draw_vertical_dotted(g, bar_offset_x + cut_at_x,bar_base_y+1, cut_line_y)
 		    
-		    g.DrawText bar_label, bar_offset_x+5, bar_base_y + bar_heigth - 5
+		    var cut_str as string = format(cut,"##0")+"cm"
 		    
-		    g.DrawingColor = rgb(160,160,160)
+		    draw_a_line(g, bar_offset_x + last_cut_at_x, cut_line_y, bar_offset_x + cut_at_x, cut_line_y, cut_str, cut_label,extra_y)
 		    
-		    draw_vertical_dotted(g, bar_offset_x ,bar_base_y+1, full_length_y)
-		    draw_vertical_dotted(g, g.Width-bar_offset_x ,bar_base_y+1, full_length_y)
+		    extra_y = if(extra_y < 1 and scaled_width < 80 , 22 , 0)
 		    
-		    var full_length_measure as double = 360
-		    var cuts() as pair = array ("NORTH-32":12.0, "SOUTH-21":22.0, "SOUTH-22":122.0)
-		    
-		    var remaining_length as Double = full_length_measure
-		    
-		    for each cutp as pair in cuts
-		      remaining_length = remaining_length - cutp.Right
-		      
-		    next
-		    
-		    cuts.Add("LeftOver":remaining_length)
-		    
-		    var last_cut_at_x as double = 0
-		    var extra_y as double = 0
-		    
-		    for each cutp as pair in cuts
-		      var cut as Double = cutp.right
-		      var cut_label as string = cutp.left
-		      var scaled_width as Double = full_bar_width / full_length_measure * cut 
-		      var cut_at_x as double = last_cut_at_x + scaled_width
-		      
-		      
-		      draw_vertical_dotted(g, bar_offset_x + cut_at_x,bar_base_y+1, cut_line_y)
-		      
-		      var cut_str as string = format(cut,"##0")+"cm"
-		      
-		      draw_a_line(g, bar_offset_x + last_cut_at_x, cut_line_y, bar_offset_x + cut_at_x, cut_line_y, cut_str, cut_label,extra_y)
-		      
-		      extra_y = if(extra_y < 1 and scaled_width < 80 , 22 , 0)
-		      
-		      last_cut_at_x = cut_at_x
-		      
-		      
-		    next
-		    
-		    // Line for full size
-		    draw_a_line(g, bar_offset_x, full_length_y, g.Width-bar_offset_x, full_length_y, "360cm","", 0)
-		    
-		    bar_base_y = bar_base_y + bar_jump_y
+		    last_cut_at_x = cut_at_x
 		    
 		  next
-		  
-		  
-		  Var f As FolderItem = SpecialFolder.Desktop.Child("WoodCutReport.pdf")
+		   
+		   Var f As FolderItem = SpecialFolder.Desktop.Child("WoodCutDrawingReport.pdf")
 		  doc.Save(f)
 		  f.Open
 		  
@@ -142,7 +175,7 @@ Protected Module CuttingModelDrawing
 		  
 		  var woodLength as integer = wrl.WoodSourceLengtrh
 		  var measureMargin as integer = wrl.MeasureMargin
-		   
+		  
 		  // The table is sorted per source item, with left over as last cut
 		  var res as clDataTable = wrl.ExportCutPlanAsTable("Cutplan")
 		  
@@ -222,7 +255,7 @@ Protected Module CuttingModelDrawing
 		  next
 		  
 		  
-		  Var f As FolderItem = SpecialFolder.Desktop.Child("WoodCutReport.pdf")
+		  Var f As FolderItem = SpecialFolder.Desktop.Child("WoodCutTextReport.pdf")
 		  doc.Save(f)
 		  f.Open
 		  
