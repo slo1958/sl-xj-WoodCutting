@@ -11,7 +11,7 @@ Begin DesktopWindow Window1
    HasMaximizeButton=   True
    HasMinimizeButton=   True
    HasTitleBar     =   True
-   Height          =   444
+   Height          =   594
    ImplicitInstance=   True
    MacProcID       =   0
    MaximumHeight   =   32000
@@ -25,7 +25,7 @@ Begin DesktopWindow Window1
    Type            =   0
    Visible         =   True
    Width           =   770
-   Begin DesktopButton Button5
+   Begin DesktopButton btn_run
       AllowAutoDeactivate=   True
       Bold            =   False
       Cancel          =   False
@@ -79,7 +79,7 @@ Begin DesktopWindow Window1
       HasHorizontalScrollbar=   False
       HasVerticalScrollbar=   True
       HeadingIndex    =   -1
-      Height          =   404
+      Height          =   554
       Index           =   -2147483648
       InitialValue    =   ""
       Italic          =   False
@@ -460,36 +460,6 @@ Begin DesktopWindow Window1
       Visible         =   True
       Width           =   80
    End
-   Begin DesktopCheckBox ck_saveplan
-      AllowAutoDeactivate=   True
-      Bold            =   False
-      Caption         =   "Save plan"
-      Enabled         =   True
-      FontName        =   "System"
-      FontSize        =   0.0
-      FontUnit        =   0
-      Height          =   20
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   18
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Tooltip         =   ""
-      Top             =   207
-      Transparent     =   False
-      Underline       =   False
-      Value           =   False
-      Visible         =   True
-      VisualState     =   0
-      Width           =   100
-   End
    Begin DesktopLabel Label7
       AllowAutoDeactivate=   True
       Bold            =   False
@@ -846,10 +816,216 @@ Begin DesktopWindow Window1
       Visible         =   True
       Width           =   80
    End
+   Begin DesktopGroupBox GroupBox1
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      Caption         =   "Export"
+      Enabled         =   True
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   126
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   32
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Tooltip         =   ""
+      Top             =   448
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   326
+      Begin DesktopButton btn_export_text
+         AllowAutoDeactivate=   True
+         Bold            =   False
+         Cancel          =   False
+         Caption         =   "as csv"
+         Default         =   False
+         Enabled         =   True
+         FontName        =   "System"
+         FontSize        =   0.0
+         FontUnit        =   0
+         Height          =   20
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox1"
+         Italic          =   False
+         Left            =   187
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         MacButtonStyle  =   0
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Tooltip         =   ""
+         Top             =   484
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   70
+      End
+      Begin DesktopButton btn_export_pdf_list
+         AllowAutoDeactivate=   True
+         Bold            =   False
+         Cancel          =   False
+         Caption         =   "as pdf"
+         Default         =   False
+         Enabled         =   True
+         FontName        =   "System"
+         FontSize        =   0.0
+         FontUnit        =   0
+         Height          =   20
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox1"
+         Italic          =   False
+         Left            =   269
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         MacButtonStyle  =   0
+         Scope           =   0
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Tooltip         =   ""
+         Top             =   484
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   70
+      End
+      Begin DesktopButton btn_export_pdf_drawings
+         AllowAutoDeactivate=   True
+         Bold            =   False
+         Cancel          =   False
+         Caption         =   "as pdf"
+         Default         =   False
+         Enabled         =   True
+         FontName        =   "System"
+         FontSize        =   0.0
+         FontUnit        =   0
+         Height          =   20
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox1"
+         Italic          =   False
+         Left            =   269
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         MacButtonStyle  =   0
+         Scope           =   0
+         TabIndex        =   2
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Tooltip         =   ""
+         Top             =   534
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   70
+      End
+      Begin DesktopLabel Label13
+         AllowAutoDeactivate=   True
+         Bold            =   False
+         Enabled         =   True
+         FontName        =   "System"
+         FontSize        =   0.0
+         FontUnit        =   0
+         Height          =   20
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox1"
+         Italic          =   False
+         Left            =   40
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   3
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   "Cut plan in text format"
+         TextAlignment   =   0
+         TextColor       =   &c000000
+         Tooltip         =   ""
+         Top             =   484
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   148
+      End
+      Begin DesktopLabel Label14
+         AllowAutoDeactivate=   True
+         Bold            =   False
+         Enabled         =   True
+         FontName        =   "System"
+         FontSize        =   0.0
+         FontUnit        =   0
+         Height          =   20
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox1"
+         Italic          =   False
+         Left            =   40
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   4
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   "Cut plan drawings"
+         TextAlignment   =   0
+         TextColor       =   &c000000
+         Tooltip         =   ""
+         Top             =   534
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   148
+      End
+   End
 End
 #tag EndDesktopWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h0
+		Sub ExportCSV()
+		  
+		  var woodLength as integer = lastRun.WoodSourceLengtrh
+		  var measureMargin as integer = lastRun.MeasureMargin
+		  
+		  var res as clDataTable = lastRun.ExportCutPlanAsTable("Cutplan")
+		  
+		  var outputfilename as string = "CutPlan" + woodLength.ToString + "cm-" + measureMargin.ToString + "cm.csv"
+		  
+		  res.SaveWithIndex(new clTextWriter(SpecialFolder.Desktop.Child(outputfilename), True))
+		  
+		  Return
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub RunModel(partLength as integer, cutmargin as integer, usefullLeftover as integer, maxItems as integer, measureMargin as integer)
 		  
@@ -871,24 +1047,20 @@ End
 		  wrl.CutMargin = cutmargin
 		  wrl.UsefullLeftOver = usefullLeftover
 		  wrl.MaxItems = maxItems
-		  
+		  wrl.MeasureMargin = MeasureMargin
 		  wrl.CutModel
 		  
 		  wrl.ShowStatus
 		  wrl.WriteCutPlan
 		  
-		  var res as clDataTable = wrl.ExportCutPlan("Cutplan")
-		  
-		  if ck_saveplan.Value then
-		    var outputfilename as string = "CutPlan" + tf_inWoodLength.text + "cm-" + tf_in_MeasureMargin.text + "cm.csv"
-		    res.SaveWithIndex(new clTextWriter(SpecialFolder.Desktop.Child(outputfilename), True))
-		    
-		  end if
+		  var res as clDataTable = wrl.ExportCutPlanAsTable("Cutplan")
 		  
 		  tf_nbUsed.text = wrl.NbrSourceUsed.ToString
 		  tf_nbLeftOver.text = wrl.NbrLeftOver.ToString
 		  tf_leftOver.text  = wrl.LengthLeftOver.ToString
 		  tf_nbUnallocated.text = wrl.NbrUnallocated.ToString
+		  
+		  lastRun = wrl
 		  
 		  return
 		End Sub
@@ -906,9 +1078,14 @@ End
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h0
+		lastRun As clWorld
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
-#tag Events Button5
+#tag Events btn_run
 	#tag Event
 		Sub Pressed()
 		  
@@ -920,6 +1097,75 @@ End
 		  Listbox1.RemoveAllRows
 		  
 		  RunModel(woodLength, 5, usefullLeftOverMinLength, maxItems, measureMargin)
+		  
+		  Return
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events btn_export_text
+	#tag Event
+		Sub Pressed()
+		  
+		  
+		  if lastRun = nil then
+		    MessageBox("Nothing to export")
+		    Return
+		    
+		  end if
+		  
+		  ExportCSV
+		  
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events btn_export_pdf_list
+	#tag Event
+		Sub Pressed()
+		  
+		  
+		  if lastRun = nil then
+		    MessageBox("Nothing to export")
+		    return
+		    
+		  end if
+		  
+		  var woodLength as integer = lastRun.WoodSourceLengtrh
+		  var measureMargin as integer = lastRun.MeasureMargin
+		  
+		  var reportInfoLabel as string = "Length: " + woodLength.ToString + "cm Margin: " + measureMargin.ToString+"cm"
+		  
+		  ExportListAsPDF(lastRun,"List of items to cut", reportInfoLabel)
+		  
+		  return
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events btn_export_pdf_drawings
+	#tag Event
+		Sub Pressed()
+		  
+		  
+		  
+		  
+		  if lastRun = nil then
+		    MessageBox("Nothing to export")
+		    return
+		    
+		  end if
+		  
+		  
+		  var woodLength as integer = lastRun.WoodSourceLengtrh
+		  var measureMargin as integer = lastRun.MeasureMargin
+		  
+		  var inforect as new clDocumentInfoRect
+		  inforect.DocAuthor = "SL"
+		  inforect.DocTitle = "Wood cutting at "+ woodLength.ToString + "cm with " + measureMargin.ToString + "cm margin"
+		  inforect.DocCompany = "© Some name."
+		  
+		  ExportDrawingsAsPDF lastRun, inforect
 		  
 		  Return
 		  

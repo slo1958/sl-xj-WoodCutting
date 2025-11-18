@@ -89,17 +89,14 @@ Class clWorld
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function ExportCutPlan(TableName as string) As clDataTable
-		  
-		  const SourceLabel as string = "Source"
-		  const PartLabel as string = "Part_id"
-		  const LengthLabel as string = "Length"
+		Function ExportCutPlanAsTable(TableName as string) As clDataTable
+		   
 		  
 		  var tbl as new clDataTable(TableName)
 		  
-		  call tbl.AddColumn(new clStringDataSerie(SourceLabel))
-		  call tbl.AddColumn(new clStringDataSerie(PartLabel))
-		  call tbl.AddColumn(new clIntegerDataSerie(LengthLabel))
+		  call tbl.AddColumn(new clStringDataSerie(self.OutputSourceLabel))
+		  call tbl.AddColumn(new clStringDataSerie(self.OutputPartLabel))
+		  call tbl.AddColumn(new clIntegerDataSerie(self.OutputLengthLabel))
 		  
 		  
 		  for each source as clWoodSource in self.WoodSource
@@ -109,16 +106,16 @@ Class clWorld
 		      
 		      
 		      for each part as clWoodPart in source.UsedIn
-		        dr = new clDataRow(SourceLabel:str(source.arrayIndex), PartLabel:part.Id, LengthLabel:part.Length)
+		        dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:part.Id, OutputLengthLabel:part.Length)
 		        tbl.AddRow(dr)
 		        
 		      next
 		      
-		      dr = new clDataRow(SourceLabel:str(source.arrayIndex), PartLabel:"LeftOver", LengthLabel:source.RemainingLength)
+		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:"LeftOver", OutputLengthLabel:source.RemainingLength)
 		      tbl.AddRow(dr)
 		      
 		    else
-		      dr = new clDataRow(SourceLabel:str(source.arrayIndex), LengthLabel:Source.RemainingLength)
+		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputLengthLabel:Source.RemainingLength)
 		      
 		      tbl.AddRow(dr)
 		    end if
@@ -208,6 +205,26 @@ Class clWorld
 		  next
 		  
 		  return LeftOver
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function NbrAllocated() As integer
+		  var nbAllocated as integer
+		  
+		  for each part as clWoodPart in self.WoodPart
+		    
+		    if  part.Allocated then
+		      nbAllocated = nbAllocated + 1
+		      
+		      
+		    end if
+		    
+		  next
+		  
+		  return nbAllocated
 		  
 		  
 		End Function
@@ -436,6 +453,10 @@ Class clWorld
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		MeasureMargin As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		UsefullLeftOver As Integer
 	#tag EndProperty
 
@@ -454,6 +475,16 @@ Class clWorld
 	#tag Property, Flags = &h0
 		writer As MessageWriter
 	#tag EndProperty
+
+
+	#tag Constant, Name = OutputLengthLabel, Type = String, Dynamic = False, Default = \"Length", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = OutputPartLabel, Type = String, Dynamic = False, Default = \"Part_id", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = OutputSourceLabel, Type = String, Dynamic = False, Default = \"Source", Scope = Public
+	#tag EndConstant
 
 
 	#tag ViewBehavior
