@@ -34,7 +34,14 @@ Protected Module CuttingModelDrawing
 		  
 		  for each row as clDataRow in resByItem
 		    if row.Cell(wrl.OutputPartLabel) <> wrl.OutputLeftOverText then
-		      summaryText = summaryText + EndOfLine +" - " + row.cell(wrl.OutputPartLabel) + " : "  + row.cell(wrl.OutputLengthLabel)+"cm from item #" + row.cell(wrl.OutputSourceLabel)
+		      
+		      if row.cell(wrl.OutputAllocationMarkLabel)  = "Y" then
+		        summaryText = summaryText + EndOfLine +" - " + row.cell(wrl.OutputPartLabel) + " : "  + row.cell(wrl.OutputLengthLabel)+"cm from item #" + row.cell(wrl.OutputSourceLabel)
+		        
+		      else
+		        summaryText = summaryText + EndOfLine +" - " + row.cell(wrl.OutputPartLabel) + " : "  + "Unallocated"
+		        
+		      end if
 		      
 		    end if
 		  next
@@ -54,11 +61,11 @@ Protected Module CuttingModelDrawing
 		  
 		  DrawPageFrame(g, inforect,"", doc.CurrentPage,expectedNumberOfPages)
 		  
-		  g.ApplyStyle(titleStyle) 
+		  g. ApplyTextStyle(titleStyle) 
 		  g.DrawText "Summary", 40, 50
 		  
 		  
-		  g.ApplyStyle(bodyStyle)
+		  g. ApplyTextStyle(bodyStyle)
 		  g.DrawText summaryText, 40, 80, g.Width-80
 		  
 		  
@@ -76,10 +83,10 @@ Protected Module CuttingModelDrawing
 		  
 		  for each row as clDataRow in res
 		    var rowSourceId as string = row.Cell(clWorld.OutputSourceLabel)
+		    var rowMark as string = row.cell(clWorld.OutputAllocationMarkLabel)
 		    
 		    
-		    
-		    if currentSourceId <> rowSourceId then
+		    if currentSourceId <> rowSourceId and rowMark = "Y" then
 		      bar_base_y = bar_base_y + bar_jump_y
 		      currentBarOnPage = currentBarOnPage + 1
 		      
@@ -114,15 +121,15 @@ Protected Module CuttingModelDrawing
 		      
 		      g.DrawingColor = rgb(160,160,160)
 		      
-		      draw_vertical_dotted(g, bar_offset_x ,bar_base_y+1, full_length_y)
-		      draw_vertical_dotted(g, g.Width-bar_offset_x ,bar_base_y+1, full_length_y)
+		      DrawVerticalDottedLine(g, bar_offset_x ,bar_base_y+1, full_length_y)
+		      DrawVerticalDottedLine(g, g.Width-bar_offset_x ,bar_base_y+1, full_length_y)
 		      
 		      // Full length bar
-		      draw_a_line(g, bar_offset_x, full_length_y, g.Width-bar_offset_x, full_length_y, wrl.WoodSourceLengtrh.ToString+"cm","", 0)
+		      DrawMeasureLine(g, bar_offset_x, full_length_y, g.Width-bar_offset_x, full_length_y, wrl.WoodSourceLengtrh.ToString+"cm","", 0)
 		      
 		      last_cut_at_x  = 0
 		      extra_y = 0
-		       currentSourceId = rowSourceId
+		      currentSourceId = rowSourceId
 		      
 		    end if
 		    
@@ -136,19 +143,19 @@ Protected Module CuttingModelDrawing
 		    var scaled_width as Double = full_bar_width / full_length_measure * cut 
 		    var cut_at_x as double = last_cut_at_x + scaled_width
 		    
-		    draw_vertical_dotted(g, bar_offset_x + cut_at_x,bar_base_y+1, cut_line_y)
+		    DrawVerticalDottedLine(g, bar_offset_x + cut_at_x,bar_base_y+1, cut_line_y)
 		    
 		    var cut_str as string = format(cut,"##0")+"cm"
 		    
-		    draw_a_line(g, bar_offset_x + last_cut_at_x, cut_line_y, bar_offset_x + cut_at_x, cut_line_y, cut_str, cut_label,extra_y)
+		    DrawMeasureLine(g, bar_offset_x + last_cut_at_x, cut_line_y, bar_offset_x + cut_at_x, cut_line_y, cut_str, cut_label,extra_y)
 		    
 		    extra_y = if(extra_y < 1 and scaled_width < 80 , 22 , 0)
 		    
 		    last_cut_at_x = cut_at_x
 		    
 		  next
-		   
-		   Var f As FolderItem = SpecialFolder.Desktop.Child("WoodCutDrawingReport.pdf")
+		  
+		  Var f As FolderItem = SpecialFolder.Desktop.Child("WoodCutDrawingReport.pdf")
 		  doc.Save(f)
 		  f.Open
 		  
@@ -198,20 +205,25 @@ Protected Module CuttingModelDrawing
 		  
 		  pageHeigth = g.Height - TopBottomMargin - TopBottomMargin
 		  
-		  g.ApplyStyle(MainStyle)
+		  g. ApplyTextStyle(MainStyle)
 		  MainRowHeight = g.TextHeight()
 		  
-		  g.ApplyStyle(ItemStyle)
+		  g. ApplyTextStyle(ItemStyle)
 		  ItemRowHeight = g.TextHeight
 		  
 		  
-		  var runningY as double = TopBottomMargin
-		  var currentSourceId as String
+		  var runningY as double 
+		  
+		  var currentSourceId as String = "-"
 		  var itemCounter as integer = 0
 		  var pageCounter as integer
 		  
+		  runningY = TopBottomMargin
+		  
 		  for each row as clDataRow in res
 		    var rowSourceId as string = row.Cell(clWorld.OutputSourceLabel)
+		    var rowMark as string = row.cell(clWorld.OutputAllocationMarkLabel)
+		    
 		    
 		    if currentSourceId <> rowSourceId then
 		      if (runningY + 3*MainRowHeight + 5*ItemRowHeight > pageHeigth) or pageCounter = 0 then
@@ -222,7 +234,7 @@ Protected Module CuttingModelDrawing
 		        
 		        runningY = TopBottomMargin
 		        
-		        g.ApplyStyle(MainStyle)
+		        g. ApplyTextStyle(MainStyle)
 		        g.DrawText reportTitle + " - " + reportInfoLabel + " - page " + pageCounter.ToString, LeftMarginMain, runningY
 		        
 		        runningY = runningY + MainRowHeight + MainRowHeight
@@ -233,8 +245,14 @@ Protected Module CuttingModelDrawing
 		        
 		      end if
 		      
-		      g.ApplyStyle(MainStyle)
-		      g.DrawText "Item #" + rowSourceId + " ( " + woodLength.ToString + "cm)", LeftMarginMain, runningY
+		      g. ApplyTextStyle(MainStyle)
+		      if rowMark="N" then
+		        g.DrawText "Unallocated" , LeftMarginMain, runningY
+		        
+		      else
+		        g.DrawText "Item #" + rowSourceId + " ( " + woodLength.ToString + "cm)", LeftMarginMain, runningY
+		        
+		      end if
 		      
 		      runningY = runningY + MainRowHeight
 		      currentSourceId = rowSourceId
@@ -243,7 +261,7 @@ Protected Module CuttingModelDrawing
 		    end if
 		    
 		    itemCounter = itemCounter + 1
-		    g.ApplyStyle(ItemStyle)
+		    g. ApplyTextStyle(ItemStyle)
 		    
 		    g.DrawText(itemCounter.ToString, LeftMarginDetail, runningY)
 		    
@@ -251,6 +269,7 @@ Protected Module CuttingModelDrawing
 		    
 		    g.DrawText row.Cell(clWorld.OutputLengthLabel) + "cm", tabLength, runningY
 		    runningY = runningY + ItemRowHeight
+		    
 		    
 		  next
 		  

@@ -54,10 +54,13 @@ Class clWorld
 		  
 		  
 		  for each part as clWoodPart in self.WoodPart
+		    var source as clWoodSource
+		    
 		    if part.Allocated then
 		      
-		    else
-		      var source as clWoodSource = self.FindWoodSourceMinLeftOver(part.Length)
+		    elseif part.Length < self.WoodSourceLengtrh then
+		      
+		      source  = self.FindWoodSourceMinLeftOver(part.Length)
 		      
 		      if source = nil then
 		        source = self.AugmentWoodSource()
@@ -66,15 +69,20 @@ Class clWorld
 		      
 		      if source <> nil then
 		        
-		        var RemainingLength as integer = source.RemainingLength - part.Length 
-		        
-		        AssignPartToSource(part, source)
-		        
-		        var secPart as clWoodPart = self.FindWoodPart(RemainingLength-CutMargin, RemainingLength)
-		        
-		        if secPart <> nil then
-		          AssignPartToSource(secPart, source)
+		        if source.RemainingLength - part.Length < 0 then
+		          // Cannot assign, likely length of new woodsource < required part length
 		          
+		        Else
+		          var RemainingLength as integer = source.RemainingLength - part.Length 
+		          
+		          AssignPartToSource(part, source)
+		          
+		          var secPart as clWoodPart = self.FindWoodPart(RemainingLength-CutMargin, RemainingLength)
+		          
+		          if secPart <> nil then
+		            AssignPartToSource(secPart, source)
+		            
+		          end if
 		        end if
 		      end if
 		      
@@ -106,19 +114,36 @@ Class clWorld
 		      
 		      
 		      for each part as clWoodPart in source.UsedIn
-		        dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:part.Id, OutputLengthLabel:part.Length)
+		        dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:part.Id, OutputLengthLabel:part.Length, OutputAllocationMarkLabel:"Y")
 		        tbl.AddRow(dr)
 		        
 		      next
 		      
-		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:OutputLeftOverText, OutputLengthLabel:source.RemainingLength)
+		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputPartLabel:OutputLeftOverText, OutputLengthLabel:source.RemainingLength, OutputAllocationMarkLabel:"Y")
 		      tbl.AddRow(dr)
 		      
 		    else
-		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputLengthLabel:Source.RemainingLength)
+		      dr = new clDataRow(OutputSourceLabel:str(source.arrayIndex+1), OutputLengthLabel:Source.RemainingLength, OutputAllocationMarkLabel:"Y")
 		      
 		      tbl.AddRow(dr)
 		    end if
+		    
+		  next
+		  
+		  // Add unallocated
+		  
+		  for each part as clWoodPart in self.WoodPart
+		    var dr as clDataRow
+		    
+		    if part.Allocated then
+		      
+		    else
+		      dr = new clDataRow( OutputPartLabel:part.Id, OutputLengthLabel:part.Length, OutputAllocationMarkLabel:"N")
+		      tbl.AddRow(dr)
+		      
+		      
+		    end if
+		    
 		    
 		  next
 		  
@@ -476,6 +501,9 @@ Class clWorld
 		writer As MessageWriter
 	#tag EndProperty
 
+
+	#tag Constant, Name = OutputAllocationMarkLabel, Type = String, Dynamic = False, Default = \"AllocatedMark", Scope = Public
+	#tag EndConstant
 
 	#tag Constant, Name = OutputLeftOverText, Type = String, Dynamic = False, Default = \"LeftOver", Scope = Public
 	#tag EndConstant
