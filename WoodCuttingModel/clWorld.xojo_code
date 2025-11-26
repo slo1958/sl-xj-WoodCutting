@@ -6,7 +6,7 @@ Class clWorld
 		  part.Source = source.arrayIndex
 		  source.UsedIn.Add(part)
 		  
-		  WriteMessage("Part " + part.Id + " length " + str(part.Length) + " cm assign to source " + str(source.arrayIndex))
+		  WriteMessage("Part " + part.Id + " length " + str(part.Length) + " cm assigned to source " + str(source.arrayIndex))
 		  
 		  Return
 		  

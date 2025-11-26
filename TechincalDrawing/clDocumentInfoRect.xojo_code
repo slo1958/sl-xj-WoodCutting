@@ -33,6 +33,10 @@ Class clDocumentInfoRect
 		  doc.Title = self.DocTitle
 		  
 		  // doc.Subject = ""
+		  
+		  return
+		  
+		  
 		End Sub
 	#tag EndMethod
 
@@ -182,6 +186,14 @@ Class clDocumentInfoRect
 			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="marginBigFrame"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

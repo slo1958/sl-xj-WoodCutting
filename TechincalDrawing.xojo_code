@@ -18,6 +18,7 @@ Protected Module TechincalDrawing
 		  var labelStyle as clTextStyle = measureStyle.clone(10)
 		  labelStyle.Bold
 		  
+		  
 		  g.DrawingColor = RGB(160,160,160)
 		  g.PenSize = 0.5
 		  

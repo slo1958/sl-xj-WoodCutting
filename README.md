@@ -55,7 +55,12 @@ The model produces
 	- because the model ran out of source items or
 	- because a required item is longer than the source items
 
-The results can be saved as a .csv file, stored on the desktop.
+The results can be saved as 
+
+- a .csv file, stored on the desktop, which can be used for any post-processing
+- a .pdf file, stored on the desktop with similar information, which can easily shared with others
+- a .pdf file, stored on the desktop, with the cutting plan as drawings
+
 
 #### Model run 
 Note the measure margin is set to 3cm
@@ -92,6 +97,34 @@ This tool uses lib-data. The original version is available at https://github.com
 - Use the model to build a plan to cut the source items into the required items, note that ‘Nbr source items used’ gives the number of source items to buy
 - Use to model to test the solution with different tolerances for required measures by adjusting ‘Measure margin’ (I usually try with 0cm, 3cm and 5cm)
 - Use the model to test the number of source items and the total waste (total length leftover) by adjusting the ‘length of one source item’, based on availability (I usually test with 270cm, 300cm, 360cm since these are standard length here).
+
+## Example .pdf files
+
+The .pdf report in text form:
+
+
+<p align="center">
+	<img src="Screenshots/sc-pdf-report-01.png">
+</p>
+
+
+The .pdf report as a set of drawings
+
+
+
+<p align="center">
+	<img src="Screenshots/sc-pdf-report-11.png">
+</p>
+
+
+
+
+<p align="center">
+	<img src="Screenshots/sc-pdf-report-12.png">
+</p>
+
+
+
 
 # IMPORTANT
 
