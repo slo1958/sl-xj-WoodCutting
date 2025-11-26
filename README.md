@@ -73,7 +73,7 @@ Note the measure margin is set to 3cm
 	<img src="Screenshots/sc-run-02.png">
 </p>
 
-#### If the user checks 'Save plan' before pressing Run an output file is created
+
 <p align="center">
 	<img src="Screenshots/sc-run-03.png">
 </p>
