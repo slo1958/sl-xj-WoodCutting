@@ -64,20 +64,42 @@ The results can be saved as
 
 #### Model run 
 Note the measure margin is set to 3cm
+
 <p align="center">
 	<img src="Screenshots/sc-run-01.png">
 </p>
 
 #### Scroll down to get the results
+
 <p align="center">
 	<img src="Screenshots/sc-run-02.png">
 </p>
+
 
 
 <p align="center">
 	<img src="Screenshots/sc-run-03.png">
 </p>
 
+
+
+
+This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
+
+
+## Usage
+
+- Use the model to build a plan to cut the source items into the required items, note that ‘Nbr source items used’ gives the number of source items to buy
+- Use to model to test the solution with different tolerances for required measures by adjusting ‘Measure margin’ (I usually try with 0cm, 3cm and 5cm)
+- Use the model to test the number of source items and the total waste (total length leftover) by adjusting the ‘length of one source item’, based on availability (I usually test with 270cm, 300cm, 360cm since these are standard length here).
+
+
+## Saving the results
+
+The last results can be exported using the buttons at the bottom of the window.
+
+
+#### Example exported .csv file
 
 <p align="center">
 	<img src="Screenshots/sc-output-01.png">
@@ -89,16 +111,9 @@ Note the measure margin is set to 3cm
 	<img src="Screenshots/sc-output-02.png">
 </p>
 
-This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
 
 
-## Usage
-
-- Use the model to build a plan to cut the source items into the required items, note that ‘Nbr source items used’ gives the number of source items to buy
-- Use to model to test the solution with different tolerances for required measures by adjusting ‘Measure margin’ (I usually try with 0cm, 3cm and 5cm)
-- Use the model to test the number of source items and the total waste (total length leftover) by adjusting the ‘length of one source item’, based on availability (I usually test with 270cm, 300cm, 360cm since these are standard length here).
-
-## Example .pdf files
+#### Example exported .pdf files
 
 The .pdf report in text form:
 
