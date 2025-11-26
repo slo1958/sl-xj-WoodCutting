@@ -55,6 +55,11 @@ The model produces
 	- because the model ran out of source items or
 	- because a required item is longer than the source items
 
+<p align="center">
+	<img src="Screenshots/sc-win-results.png">
+</p>
+
+
 The results can be saved as 
 
 - a .csv file, stored on the desktop, which can be used for any post-processing
@@ -98,6 +103,9 @@ This tool uses lib-data. The original version is available at https://github.com
 
 The last results can be exported using the buttons at the bottom of the window.
 
+<p align="center">
+	<img src="Screenshots/sc-win-export.png">
+</p>
 
 #### Example exported .csv file
 
