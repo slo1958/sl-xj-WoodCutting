@@ -1031,7 +1031,7 @@ End
 		  
 		  var inputfilename as string = "WoodCut-input.csv"  
 		  
-		  var sourcefile as FolderItem = SpecialFolder.Desktop.child(inputfilename)
+		  var sourcefile as FolderItem = FldShowOpenFileDialog("", inputfilename, app.QuickOpenSaveConfig)
 		  
 		  req = LoadRequirements(sourcefile)
 		  

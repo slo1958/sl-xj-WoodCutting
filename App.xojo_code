@@ -1,6 +1,23 @@
 #tag Class
 Protected Class App
 Inherits DesktopApplication
+	#tag Event
+		Sub Opening()
+		  
+		  app.QuickOpenSaveConfig = new clQuickOpenSaveConfig("XOJO-WOODCUTTING")
+		  
+		  app.QuickOpenSaveConfig.TestMode = false //DebugBuild
+		  app.QuickOpenSaveConfig.InformUser = True
+		  
+		End Sub
+	#tag EndEvent
+
+
+	#tag Property, Flags = &h0
+		QuickOpenSaveConfig As clQuickOpenSaveConfig
+	#tag EndProperty
+
+
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"&Delete"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"&Delete"
