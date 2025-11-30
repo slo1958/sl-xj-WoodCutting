@@ -88,8 +88,11 @@ Note the measure margin is set to 3cm
 
 
 
+## Uses libraries
 
-This tool uses lib-data. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
+This tool uses lib-data to handle input and output datasets. The original version is available at https://github.com/slo1958/sl-xj-lib-data.git
+
+The tool uses lib-quickOpenSave. The original is available at https://github.com/slo1958/sl-xj-lib-QuickOpenSave.git
 
 
 ## Usage
