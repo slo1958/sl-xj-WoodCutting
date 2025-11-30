@@ -1015,12 +1015,15 @@ End
 		  
 		  var woodLength as integer = lastRun.WoodSourceLengtrh
 		  var measureMargin as integer = lastRun.MeasureMargin
+		  var destinationFile as FolderItem
 		  
 		  var res as clDataTable = lastRun.ExportCutPlanAsTable("Cutplan")
 		  
 		  var outputfilename as string = "CutPlan" + woodLength.ToString + "cm-" + measureMargin.ToString + "cm.csv"
 		  
-		  res.SaveWithIndex(new clTextWriter(SpecialFolder.Desktop.Child(outputfilename), True))
+		  destinationFile = FldShowSaveFileDialog("", outputfilename, app.QuickOpenSaveConfig)
+		  
+		  res.SaveWithIndex(new clTextWriter(destinationFile, True))
 		  
 		  Return
 		End Sub

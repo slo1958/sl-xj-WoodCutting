@@ -6,7 +6,7 @@ Inherits DesktopApplication
 		  
 		  app.QuickOpenSaveConfig = new clQuickOpenSaveConfig("XOJO-WOODCUTTING")
 		  
-		  app.QuickOpenSaveConfig.TestMode = false //DebugBuild
+		  app.QuickOpenSaveConfig.TestMode = DebugBuild
 		  app.QuickOpenSaveConfig.InformUser = True
 		  
 		End Sub

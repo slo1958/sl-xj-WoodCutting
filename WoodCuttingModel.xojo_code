@@ -3,6 +3,8 @@ Protected Module WoodCuttingModel
 	#tag Method, Flags = &h0
 		Function LoadRequirements(sourceFile as FolderItem) As clDataTable
 		  
+		  if sourceFile = nil then return nil
+		  
 		  // Set the field separator to ';'
 		  var cfg as new clTextFileConfig(";")
 		  
